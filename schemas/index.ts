@@ -28,4 +28,7 @@ export const typeDefs = gql`
       optionalComment: String!
     ): User
   }
+  type Mutation {
+    updateUserGender(id: ID!, gender: String!): User
+  }
 `;

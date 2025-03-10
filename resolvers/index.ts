@@ -1,4 +1,5 @@
 import { User } from "../models/user";
+import { UserType } from "../types/User";
 
 export const resolvers = {
   Query: {
@@ -6,7 +7,7 @@ export const resolvers = {
   },
   Mutation: {
     createUser: async (
-      __dirname,
+      _,
       {
         name,
         email,
@@ -16,7 +17,7 @@ export const resolvers = {
         birthdate,
         noOfOffices,
         optionalComment,
-      }
+      }: any
     ) => {
       const user = await User.create({
         name,
@@ -28,6 +29,12 @@ export const resolvers = {
         noOfOffices,
         optionalComment,
       });
+      return user;
+    },
+    updateUserGender: async (_, { id, gender }) => {
+      const user = await User.findOne({ where: { id } });
+      user.gender = gender;
+      user.save();
       return user;
     },
   },
