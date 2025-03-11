@@ -1,13 +1,13 @@
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
-import { typeDefs } from "./schemas";
+import { schema, typeDefs } from "./schemas";
 import { resolvers } from "./resolvers";
 import { sequelize } from "./models";
 
 async function startServer() {
-  const app: any = express();
+  const app : any = express();
   const server = new ApolloServer({
-    typeDefs,
+    typeDefs: schema,
     resolvers,
     introspection: true,
   });

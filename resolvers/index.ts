@@ -1,9 +1,10 @@
+import { Office } from "../models/office";
 import { User } from "../models/user";
-import { UserType } from "../types/User";
 
 export const resolvers = {
   Query: {
     allUsers: async () => await User.findAll(),
+    allOffices: async () => await Office.findAll(),
   },
   Mutation: {
     createUser: async (
