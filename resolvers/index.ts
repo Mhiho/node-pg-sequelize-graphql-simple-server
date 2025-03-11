@@ -1,5 +1,7 @@
-import { Office } from "../models/office";
-import { User } from "../models/user";
+import { Office } from "../models/user_office";
+import { User } from "../models/user_office";
+import { UserType } from "../types/User";
+import { v4 as uuid } from "uuid";
 
 export const resolvers = {
   Query: {
@@ -14,18 +16,17 @@ export const resolvers = {
         email,
         phone,
         gender,
-        serviceDepartment,
         birthdate,
         noOfOffices,
         optionalComment,
-      }: any
+      }: UserType
     ) => {
       const user = await User.create({
         name,
         email,
         phone,
         gender,
-        serviceDepartment,
+        serviceDepartment: [],
         birthdate,
         noOfOffices,
         optionalComment,
@@ -37,6 +38,23 @@ export const resolvers = {
       user.gender = gender;
       user.save();
       return user;
+    },
+    addOfficeToUser: async (_, { id, officeId }) => {
+      const user = await User.findOne({ where: { id } });
+      user.serviceDepartment.push(officeId);
+      user.noOfOffices = user.serviceDepartment.length;
+      user.save();
+      return user;
+    },
+    createOffice: async (_, { name, street, streetNo, city }) => {
+      const office = await Office.create({
+        officeId: uuid(),
+        name,
+        street,
+        streetNo,
+        city,
+      });
+      return office;
     },
   },
 };

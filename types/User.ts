@@ -1,10 +1,12 @@
+import { Json } from "sequelize/types/utils";
+
 export type UserType = {
   id: number;
   name: string;
   email: string;
   phone: string;
   gender: Gender;
-  serviceDepartment: string;
+  serviceDepartment: string[];
   birthdate: string;
   noOfOffices: number;
   optionalComment: string;

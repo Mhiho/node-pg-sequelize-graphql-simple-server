@@ -4,22 +4,23 @@ import {
   constraintDirective,
   constraintDirectiveTypeDefs,
 } from "graphql-constraint-directive";
+import { UUID } from "sequelize";
 
-export const typeDefs = `
+export const typeDefs = gql`
   type User {
     id: ID!
     name: String!
     email: String!
     phone: String!
     gender: String!
-    serviceDepartment: [ID]
+    serviceDepartment: [String!]!
     birthdate: String!
-    noOfOffices: Int!
+    noOfOffices: Int
     optionalComment: String!
   }
   type Office {
     id: ID!
-    officeId: ID!
+    officeId: String!
     name: String!
     street: String!
     streetNo: Int!
@@ -37,22 +38,24 @@ export const typeDefs = `
       email: String! @constraint(format: "email", maxLength: 255)
       phone: String! @constraint(maxLength: 16)
       gender: String!
-      serviceDepartment: [ID]
+      serviceDepartment: [String!]!
       birthdate: String!
-      noOfOffices: Int!
       optionalComment: String!
     ): User
   }
-  # type Mutation {
-  #   createOffice(
-  #     name: String!
-  #     street: String!
-  #     streetNo: Int!
-  #     city: String!
-  #   ): Office
-  # }
+  type Mutation {
+    createOffice(
+      name: String!
+      street: String!
+      streetNo: Int!
+      city: String!
+    ): Office
+  }
   type Mutation {
     updateUserGender(id: ID!, gender: String!): User
+  }
+  type Mutation {
+    addOfficeToUser(id: ID!, officeId: String!): User
   }
 `;
 
