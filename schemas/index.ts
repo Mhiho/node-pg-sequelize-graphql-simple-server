@@ -57,6 +57,9 @@ export const typeDefs = gql`
   type Mutation {
     addOfficeToUser(id: ID!, officeId: String!): User
   }
+  type Mutation {
+    deleteOffice(id: ID!, officeId: String!): User
+  }
 `;
 
 export let schema = makeExecutableSchema({

@@ -56,5 +56,14 @@ export const resolvers = {
       });
       return office;
     },
+    deleteOffice: async (_, { id, officeId }) => {
+      const user = await User.findOne({ where: { id } });
+      user.serviceDepartment = user.serviceDepartment.filter(
+        (department) => department !== officeId
+      );
+      user.noOfOffices = user.serviceDepartment.length;
+      user.save();
+      return user;
+    },
   },
 };
